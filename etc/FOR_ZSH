@@ -1,0 +1,4 @@
+add following two lines to .zshrc
+
+autoload bashcompinit
+bashcompinit
