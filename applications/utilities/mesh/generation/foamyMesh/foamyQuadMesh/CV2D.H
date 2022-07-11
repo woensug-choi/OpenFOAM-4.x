@@ -1,8 +1,8 @@
 /*---------------------------------------------------------------------------*\
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
-   \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2013-2015 OpenFOAM Foundation
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Copyright (C) 2013-2019 OpenFOAM Foundation
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -117,8 +117,6 @@ SourceFiles
 #define CGAL_INEXACT
 #define CGAL_HIERARCHY
 
-// Include uint.H before CGAL headers to define __STDC_LIMIT_MACROS
-#include "uint.H"
 #include "CGALTriangulation2Ddefs.H"
 #include "Time.H"
 #include "point2DFieldFwd.H"
@@ -148,10 +146,10 @@ class CV2D
 :
     public Delaunay
 {
+    //- Use the Foam::point in preference to the CGAL point
+    typedef Foam::point point;
 
-private:
-
-    // Private data
+    // Private Data
 
         //- The time registry of the application
         const Time& runTime_;
@@ -159,7 +157,7 @@ private:
         mutable Random rndGen_;
 
         //- The surface to mesh
-        //const querySurface& qSurf_;
+        // const querySurface& qSurf_;
         //- All geometry of the meshing process, including surfaces to be
         //  conformed to and those to be used for refinement
         searchableSurfaces allGeometry_;
@@ -187,7 +185,7 @@ private:
         //- Keep track of the boundary conform point-pairs
         //  stored after the insertion of the surface point-pairs in case
         //  the boundary conform function is called more than once without
-        //  removing and insertin the surface point-pairs
+        //  removing and inserting the surface point-pairs
         label startOfBoundaryConformPointPairs_;
 
         //- Store the feature points
@@ -200,13 +198,6 @@ private:
 
 
     // Private Member Functions
-
-        //- Disallow default bitwise copy construct
-        CV2D(const CV2D&);
-
-        //- Disallow default bitwise assignment
-        void operator=(const CV2D&);
-
 
         //- Insert point and return it's index
         inline label insertPoint
@@ -313,7 +304,7 @@ private:
 
         void markNearBoundaryPoints();
 
-        //- Restore the Delaunay contraint
+        //- Restore the Delaunay constraint
         void fast_restore_Delaunay(Vertex_handle vh);
 
         // Flip operations used by fast_restore_Delaunay
@@ -334,6 +325,9 @@ public:
 
         //- Construct for given surface
         CV2D(const Time& runTime, const dictionary& controlDict);
+
+        //- Disallow default bitwise copy construction
+        CV2D(const CV2D&) = delete;
 
 
     //- Destructor
@@ -453,6 +447,12 @@ public:
             void writePatch(const fileName& fName) const;
 
             void write() const;
+
+
+    // Member Operators
+
+        //- Disallow default bitwise assignment
+        void operator=(const CV2D&) = delete;
 };
 
 

@@ -66,6 +66,9 @@ OpenFOAM | ThirdParty)
     Gcc61)
         gcc_version=gcc-6.1.0
         ;;
+    Gcc94)
+        gcc_version=gcc-9.4.0
+        ;;
     Clang)
         # Using clang - not gcc
         export WM_CC='clang'

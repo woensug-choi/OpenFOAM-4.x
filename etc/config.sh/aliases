@@ -72,6 +72,7 @@ alias run='cd $FOAM_RUN'
 # For backward-compatibility unalias wmRefresh if it is defined as an alias
 [ "$(type -t wmRefresh)" = "alias" ] && unalias wmRefresh || unset wmRefresh
 wmRefresh()
+#[ "$(type wmRefresh | awk '{print $4}')" = "alias" ] && unalias wmRefresh || unset wmRefresh
 {
     wmProjectDir=$WM_PROJECT_DIR
     foamSettings=$FOAM_SETTINGS
